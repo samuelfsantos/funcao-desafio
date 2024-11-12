@@ -39,7 +39,14 @@ namespace WebAtividadeEntrevista.Controllers
             }
             else
             {
-                
+                model.CPF = model.CPF.LimparFormatacaoCpf();
+
+                if (bo.VerificarExistencia(model.CPF))
+                {
+                    Response.StatusCode = 400;
+                    return Json("CPF já existente");
+                }
+
                 model.Id = bo.Incluir(new Cliente()
                 {                    
                     CEP = model.CEP,
@@ -51,7 +58,7 @@ namespace WebAtividadeEntrevista.Controllers
                     Nome = model.Nome,
                     Sobrenome = model.Sobrenome,
                     Telefone = model.Telefone,
-                    CPF = model.CPF.LimparFormatacaoCpf()
+                    CPF = model.CPF
                 });
 
            
@@ -75,6 +82,15 @@ namespace WebAtividadeEntrevista.Controllers
             }
             else
             {
+                model.CPF = model.CPF.LimparFormatacaoCpf();
+
+                Cliente cliente = bo.Consultar(model.Id);
+                if (bo.VerificarExistencia(model.CPF) && model.CPF != cliente.CPF)
+                {
+                    Response.StatusCode = 400;
+                    return Json("CPF já existente");
+                }
+
                 bo.Alterar(new Cliente()
                 {
                     Id = model.Id,
@@ -87,7 +103,7 @@ namespace WebAtividadeEntrevista.Controllers
                     Nome = model.Nome,
                     Sobrenome = model.Sobrenome,
                     Telefone = model.Telefone,
-                    CPF = model.CPF.LimparFormatacaoCpf()
+                    CPF = model.CPF
                 });
                                
                 return Json("Cadastro alterado com sucesso");
