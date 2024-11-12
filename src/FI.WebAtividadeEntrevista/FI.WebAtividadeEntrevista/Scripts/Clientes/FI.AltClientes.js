@@ -44,7 +44,8 @@ $(document).ready(function () {
             }
         });
     })
-    
+
+    LoadMasks();
 })
 
 function ModalDialog(titulo, texto) {
@@ -69,4 +70,10 @@ function ModalDialog(titulo, texto) {
 
     $('body').append(texto);
     $('#' + random).modal('show');
+}
+
+function LoadMasks() {
+    $("#CPF").inputmask("mask", { "mask": "999.999.999-99" });
+    $("#CEP").inputmask("mask", { "mask": "99999-999" });
+    $("#Telefone").inputmask("mask", { "mask": "(99) 9999-99999" });
 }

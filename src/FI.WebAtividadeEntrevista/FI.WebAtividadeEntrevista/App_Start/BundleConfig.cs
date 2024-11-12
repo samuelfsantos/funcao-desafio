@@ -44,6 +44,11 @@ namespace FI.WebAtividadeEntrevista
 
             bundles.Add(new StyleBundle("~/Content/jtable").Include(
                       "~/Scripts/jtable/themes/metro/darkgray/jtable.css"));
+
+            bundles.Add(new ScriptBundle("~/bundles/inputmask").Include(
+                    "~/Scripts/inputmask/bindings/inputmask.binding.js",
+                    "~/Scripts/inputmask/inputmask.js",
+                    "~/Scripts/inputmask/jquery.inputmask.js"));
         }
     }
 }
