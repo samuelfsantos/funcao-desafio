@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using FI.AtividadeEntrevista.DML;
+using FI.WebAtividadeEntrevista.Customs;
 
 namespace WebAtividadeEntrevista.Controllers
 {
@@ -49,7 +50,8 @@ namespace WebAtividadeEntrevista.Controllers
                     Nacionalidade = model.Nacionalidade,
                     Nome = model.Nome,
                     Sobrenome = model.Sobrenome,
-                    Telefone = model.Telefone
+                    Telefone = model.Telefone,
+                    CPF = model.CPF.LimparFormatacaoCpf()
                 });
 
            
@@ -84,7 +86,8 @@ namespace WebAtividadeEntrevista.Controllers
                     Nacionalidade = model.Nacionalidade,
                     Nome = model.Nome,
                     Sobrenome = model.Sobrenome,
-                    Telefone = model.Telefone
+                    Telefone = model.Telefone,
+                    CPF = model.CPF.LimparFormatacaoCpf()
                 });
                                
                 return Json("Cadastro alterado com sucesso");
@@ -111,10 +114,9 @@ namespace WebAtividadeEntrevista.Controllers
                     Nacionalidade = cliente.Nacionalidade,
                     Nome = cliente.Nome,
                     Sobrenome = cliente.Sobrenome,
-                    Telefone = cliente.Telefone
-                };
-
-            
+                    Telefone = cliente.Telefone,
+                    CPF = cliente.CPF
+                };            
             }
 
             return View(model);
