@@ -10,5 +10,9 @@
 }
 
 .marg-bot-8 {
-    margin-bottom: 8px;
+    margin-bottom: 8px !important;
+}
+
+.marg-top-27 {
+    margin-top: 27px !important;
 }

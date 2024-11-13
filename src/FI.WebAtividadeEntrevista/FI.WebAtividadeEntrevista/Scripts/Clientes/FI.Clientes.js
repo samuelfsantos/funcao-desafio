@@ -1,4 +1,8 @@
 ﻿
+
+var beneficiarios = [];
+
+
 $(document).ready(function () {
     $('#formCadastro').submit(function (e) {
         e.preventDefault();
@@ -32,7 +36,8 @@ $(document).ready(function () {
         });
     })
 
-    LoadMasks();
+    CarregarMascaras();
+    CarregarPopupBeneficiarios();
 })
 
 function ModalDialog(titulo, texto) {
@@ -59,8 +64,62 @@ function ModalDialog(titulo, texto) {
     $('#' + random).modal('show');
 }
 
-function LoadMasks() {
+function CarregarMascaras() {
     $("#CPF").inputmask("mask", { "mask": "999.999.999-99" });
     $("#CEP").inputmask("mask", { "mask": "99999-999" });
     $("#Telefone").inputmask("mask", { "mask": "(99) 9999-99999" });
+}
+
+function CarregarPopupBeneficiarios() {
+    $("#Beneficiarios").click(function () {
+        $("#modalBeneficiarios").modal("show");
+        $("#BeneficiarioCPF").inputmask("mask", { "mask": "999.999.999-99" });
+    });
+
+    $("#IncluirBeneficiario").click(function () {
+        var cpf = $("#BeneficiarioCPF").val();
+        var nome = $("#BeneficiarioNome").val();
+
+        if (cpf && nome) {
+            AdicionarBeneficiario(cpf, nome);
+            $("#BeneficiarioCPF, #BeneficiarioNome").val('');
+        } else {
+            alert("Por favor, preencha CPF e Nome.");
+        }
+    });
+}
+
+function AdicionarBeneficiario(cpf, nome) {
+    beneficiarios.push({ CPF: cpf, Nome: nome });
+    AtualizarGridBeneficiarios();
+}
+function AtualizarGridBeneficiarios() {
+    var tbody = $("#gridBeneficiarios tbody");
+    tbody.empty();
+
+    beneficiarios.forEach(function (beneficiario, index) {
+        var row = `<tr>
+            <td>${beneficiario.CPF}</td>
+            <td>${beneficiario.Nome}</td>
+            <td>
+                <button type="button" class="btn btn-xs btn-primary" onclick="AlterarBeneficiario(${index})">Alterar</button>
+                <button type="button" class="btn btn-xs btn-primary" onclick="RemoverBeneficiario(${index})">Excluir</button>
+            </td>
+        </tr>`;
+        tbody.append(row);
+    });
+}
+
+function RemoverBeneficiario(index) {
+    beneficiarios.splice(index, 1);
+    AtualizarGridBeneficiarios();
+}
+
+function AlterarBeneficiario(index) {
+    var beneficiario = beneficiarios[index];
+    $("#BeneficiarioCPF").val(beneficiario.CPF);
+    $("#BeneficiarioNome").val(beneficiario.Nome);
+
+    beneficiarios.splice(index, 1);
+    AtualizarGridBeneficiarios();
 }

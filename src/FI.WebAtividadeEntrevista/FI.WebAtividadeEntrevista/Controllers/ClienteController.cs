@@ -60,7 +60,6 @@ namespace WebAtividadeEntrevista.Controllers
                     Telefone = model.Telefone,
                     CPF = model.CPF
                 });
-
            
                 return Json("Cadastro efetuado com sucesso");
             }
@@ -70,7 +69,7 @@ namespace WebAtividadeEntrevista.Controllers
         public JsonResult Alterar(ClienteModel model)
         {
             BoCliente bo = new BoCliente();
-       
+
             if (!this.ModelState.IsValid)
             {
                 List<string> erros = (from item in ModelState.Values
@@ -131,7 +130,14 @@ namespace WebAtividadeEntrevista.Controllers
                     Nome = cliente.Nome,
                     Sobrenome = cliente.Sobrenome,
                     Telefone = cliente.Telefone,
-                    CPF = cliente.CPF
+                    CPF = cliente.CPF,
+                    Beneficiarios = new BoBeneficiario().Listar(cliente.Id).Select(b => new BeneficiarioModel() 
+                    { 
+                        Id = b.Id, 
+                        Nome = b.Nome, 
+                        CPF = b.CPF, 
+                        IdCliente = b.IdCliente 
+                    }).ToList()
                 };            
             }
 
