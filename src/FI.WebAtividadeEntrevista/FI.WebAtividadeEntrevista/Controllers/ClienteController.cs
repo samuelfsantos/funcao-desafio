@@ -44,7 +44,13 @@ namespace WebAtividadeEntrevista.Controllers
                 if (bo.VerificarExistencia(model.CPF))
                 {
                     Response.StatusCode = 400;
-                    return Json("CPF já existente");
+                    return Json("CPF informado para o cliente já existe");
+                }
+
+                if (model.Beneficiarios.GroupBy(b => b.CPF.LimparFormatacaoCpf()).Any(g => g.Count() > 1))
+                {
+                    Response.StatusCode = 400;
+                    return Json("CPF do beneficiário está duplicado");
                 }
 
                 model.Id = bo.Incluir(new Cliente()
@@ -60,7 +66,13 @@ namespace WebAtividadeEntrevista.Controllers
                     Telefone = model.Telefone,
                     CPF = model.CPF
                 });
-           
+
+                model.Beneficiarios.ForEach(b =>
+                {
+                    Beneficiario beneficiario = new Beneficiario() { Nome = b.Nome, CPF = b.CPF.LimparFormatacaoCpf(), IdCliente = model.Id };
+                    new BoBeneficiario().Incluir(beneficiario);
+                });
+
                 return Json("Cadastro efetuado com sucesso");
             }
         }
@@ -87,7 +99,13 @@ namespace WebAtividadeEntrevista.Controllers
                 if (bo.VerificarExistencia(model.CPF) && model.CPF != cliente.CPF)
                 {
                     Response.StatusCode = 400;
-                    return Json("CPF já existente");
+                    return Json("CPF informado para o cliente já existe");
+                }
+
+                if (model.Beneficiarios.GroupBy(b => b.CPF.LimparFormatacaoCpf()).Any(g => g.Count() > 1))
+                {
+                    Response.StatusCode = 400;
+                    return Json("CPF do beneficiário está duplicado");
                 }
 
                 bo.Alterar(new Cliente()
@@ -104,7 +122,18 @@ namespace WebAtividadeEntrevista.Controllers
                     Telefone = model.Telefone,
                     CPF = model.CPF
                 });
-                               
+
+                new BoBeneficiario().Listar(model.Id).ForEach(b =>
+                {
+                    new BoBeneficiario().Excluir(b.Id);
+                });
+
+                model.Beneficiarios.ForEach(b =>
+                {
+                    Beneficiario beneficiario = new Beneficiario() { Nome = b.Nome, CPF = b.CPF.LimparFormatacaoCpf(), IdCliente = model.Id };
+                    new BoBeneficiario().Incluir(beneficiario);
+                });
+
                 return Json("Cadastro alterado com sucesso");
             }
         }

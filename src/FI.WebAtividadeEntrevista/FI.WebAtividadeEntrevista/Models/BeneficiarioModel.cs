@@ -13,14 +13,14 @@ namespace WebAtividadeEntrevista.Models
         /// <summary>
         /// Nome
         /// </summary>
-        [Required(ErrorMessage = "Nome é obrigatório")]
+        [Required(ErrorMessage = "Nome do Beneficiário é obrigatório")]
         public string Nome { get; set; }
 
         /// <summary>
         /// CPF
         /// </summary>
-        [Required(ErrorMessage = "CPF é obrigatório")]
-        [CustomValidationModelCPF(ErrorMessage = "Digite um CPF válido")]
+        [Required(ErrorMessage = "CPF do Beneficiário é obrigatório")]
+        [CustomValidationModelBeneficiarioCPF(ErrorMessage = "CPF do Beneficiário está inválido")]
         public string CPF { get; set; }
 
         /// <summary>

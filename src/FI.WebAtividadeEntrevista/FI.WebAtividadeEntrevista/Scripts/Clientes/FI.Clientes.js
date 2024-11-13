@@ -1,7 +1,5 @@
 ﻿
-
 var beneficiarios = [];
-
 
 $(document).ready(function () {
     $('#formCadastro').submit(function (e) {
@@ -19,7 +17,8 @@ $(document).ready(function () {
                 "Estado": $(this).find("#Estado").val(),
                 "Cidade": $(this).find("#Cidade").val(),
                 "Logradouro": $(this).find("#Logradouro").val(),
-                "Telefone": $(this).find("#Telefone").val()            
+                "Telefone": $(this).find("#Telefone").val(),
+                "Beneficiarios": beneficiarios
             },
             error:
             function (r) {
@@ -90,9 +89,19 @@ function CarregarPopupBeneficiarios() {
 }
 
 function AdicionarBeneficiario(cpf, nome) {
+    var cpfExistente = beneficiarios.some(function (beneficiario) {
+        return beneficiario.CPF === cpf;
+    });
+
+    if (cpfExistente) {
+        alert("Este CPF já foi adicionado.");
+        return;
+    }
+
     beneficiarios.push({ CPF: cpf, Nome: nome });
     AtualizarGridBeneficiarios();
 }
+
 function AtualizarGridBeneficiarios() {
     var tbody = $("#gridBeneficiarios tbody");
     tbody.empty();

@@ -17,51 +17,51 @@ namespace WebAtividadeEntrevista.Models
         /// <summary>
         /// CEP
         /// </summary>
-        [Required(ErrorMessage = "CEP é obrigatório")]
+        [Required(ErrorMessage = "CEP do Cliente é obrigatório")]
         public string CEP { get; set; }
 
         /// <summary>
         /// Cidade
         /// </summary>
-        [Required(ErrorMessage = "Cidade é obrigatório")]
+        [Required(ErrorMessage = "Cidade do Cliente é obrigatório")]
         public string Cidade { get; set; }
 
         /// <summary>
         /// E-mail
         /// </summary>
-        [Required(ErrorMessage = "Email é obrigatório")]
-        [RegularExpression(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$", ErrorMessage = "Digite um e-mail válido")]
+        [Required(ErrorMessage = "Email do Cliente é obrigatório")]
+        [RegularExpression(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$", ErrorMessage = "E-mail do Cliente está inválido")]
         public string Email { get; set; }
 
         /// <summary>
         /// Estado
         /// </summary>
-        [Required(ErrorMessage = "Estado é obrigatório")]
-        [MaxLength(2, ErrorMessage = "Estado deve ter no máximo 2 caracteres")]
+        [Required(ErrorMessage = "Estado do Cliente é obrigatório")]
+        [MaxLength(2, ErrorMessage = "Estado do Cliente deve ter no máximo 2 caracteres")]
         public string Estado { get; set; }
 
         /// <summary>
         /// Logradouro
         /// </summary>
-        [Required(ErrorMessage = "Logradouro é obrigatório")]
+        [Required(ErrorMessage = "Logradouro do Cliente é obrigatório")]
         public string Logradouro { get; set; }
 
         /// <summary>
         /// Nacionalidade
         /// </summary>
-        [Required(ErrorMessage = "Nacionalidade é obrigatório")]
+        [Required(ErrorMessage = "Nacionalidade do Cliente é obrigatório")]
         public string Nacionalidade { get; set; }
 
         /// <summary>
         /// Nome
         /// </summary>
-        [Required(ErrorMessage = "Nome é obrigatório")]
+        [Required(ErrorMessage = "Nome do Cliente é obrigatório")]
         public string Nome { get; set; }
 
         /// <summary>
         /// Sobrenome
         /// </summary>
-        [Required(ErrorMessage = "Sobrenome é obrigatório")]
+        [Required(ErrorMessage = "Sobrenome do Cliente é obrigatório")]
         public string Sobrenome { get; set; }
 
         /// <summary>
@@ -72,8 +72,8 @@ namespace WebAtividadeEntrevista.Models
         /// <summary>
         /// CPF
         /// </summary>
-        [Required(ErrorMessage = "CPF é obrigatório")]
-        [CustomValidationModelCPF(ErrorMessage = "Digite um CPF válido")]
+        [Required(ErrorMessage = "CPF do Cliente é obrigatório")]
+        [CustomValidationModelClienteCPF(ErrorMessage = "CPF do Cliente está inválido")]
         public string CPF { get; set; }
 
         /// <summary>

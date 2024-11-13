@@ -1,4 +1,5 @@
-﻿
+﻿var beneficiarios = [];
+
 $(document).ready(function () {
     if (obj) {
         $('#formCadastro #Nome').val(obj.Nome);
@@ -11,6 +12,11 @@ $(document).ready(function () {
         $('#formCadastro #Logradouro').val(obj.Logradouro);
         $('#formCadastro #Telefone').val(obj.Telefone);
         $('#formCadastro #CPF').val(obj.CPF);
+
+        beneficiarios = obj.Beneficiarios.map(b => ({
+            Nome: b.Nome,
+            CPF: formatarCPF(b.CPF)
+        }));
     }
 
     $('#formCadastro').submit(function (e) {
@@ -29,7 +35,8 @@ $(document).ready(function () {
                 "Estado": $(this).find("#Estado").val(),
                 "Cidade": $(this).find("#Cidade").val(),
                 "Logradouro": $(this).find("#Logradouro").val(),
-                "Telefone": $(this).find("#Telefone").val()          
+                "Telefone": $(this).find("#Telefone").val(),
+                "Beneficiarios": beneficiarios
             },
             error:
             function (r) {
@@ -83,6 +90,8 @@ function CarregarMascaras() {
 
 
 function CarregarPopupBeneficiarios() {
+    AtualizarGridBeneficiarios();
+
     $("#Beneficiarios").click(function () {
         $("#modalBeneficiarios").modal("show");
         $("#BeneficiarioCPF").inputmask("mask", { "mask": "999.999.999-99" });
@@ -102,9 +111,19 @@ function CarregarPopupBeneficiarios() {
 }
 
 function AdicionarBeneficiario(cpf, nome) {
+    var cpfExistente = beneficiarios.some(function (beneficiario) {
+        return beneficiario.CPF === cpf;
+    });
+
+    if (cpfExistente) {
+        alert("Este CPF já foi adicionado.");
+        return;
+    }
+
     beneficiarios.push({ CPF: cpf, Nome: nome });
     AtualizarGridBeneficiarios();
 }
+
 function AtualizarGridBeneficiarios() {
     var tbody = $("#gridBeneficiarios tbody");
     tbody.empty();
@@ -134,4 +153,9 @@ function AlterarBeneficiario(index) {
 
     beneficiarios.splice(index, 1);
     AtualizarGridBeneficiarios();
+}
+
+function formatarCPF(cpf) {
+    cpf = cpf.replace(/\D/g, "");
+    return cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
 }
