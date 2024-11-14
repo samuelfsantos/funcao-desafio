@@ -47,6 +47,7 @@ namespace WebAtividadeEntrevista.Controllers
                     return Json("CPF informado para o cliente já existe");
                 }
 
+                model.Beneficiarios = model.Beneficiarios == null ? new List<BeneficiarioModel>() : model.Beneficiarios;
                 if (model.Beneficiarios.GroupBy(b => b.CPF.LimparFormatacaoCpf()).Any(g => g.Count() > 1))
                 {
                     Response.StatusCode = 400;
@@ -102,6 +103,7 @@ namespace WebAtividadeEntrevista.Controllers
                     return Json("CPF informado para o cliente já existe");
                 }
 
+                model.Beneficiarios = model.Beneficiarios == null ? new List<BeneficiarioModel>() : model.Beneficiarios;
                 if (model.Beneficiarios.GroupBy(b => b.CPF.LimparFormatacaoCpf()).Any(g => g.Count() > 1))
                 {
                     Response.StatusCode = 400;
